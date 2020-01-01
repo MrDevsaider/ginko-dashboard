@@ -1,5 +1,5 @@
 {
-  "name": "no-code",
+  "name": "ginko-dash-xyz",
   "version": "0.0.1",
   "description": "No code",
   "engines": {
@@ -8,5 +8,9 @@
   "repository": {
     "url": "https://glitch.com/@ai-mon"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "5.7.1"
+  }
 }
