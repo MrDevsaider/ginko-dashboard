@@ -5,6 +5,7 @@ module.exports = {
     app: process.env.tokensBotApp,
     id: process.env.tokensId,
     mongo: process.env.tokensMongo,
+    url: process.env.tokensURL,
     votes: {
       password: process.env.tokensVotePass,
       webhook: process.env.tokensVoteWebhook

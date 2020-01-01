@@ -19,14 +19,14 @@ passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 
-let scopes = ["indetify", "email", "guilds", "guilds.join"];
+const scopes = ["indetify", "email", "guilds", "guilds.join"];
 
 passport.use(
   new Strategy(
     {
       clientID: config.tokens.id,
       clientSecret: config.tokens.app,
-      callbackURL: "https://localhost:300/login/callback",
+      callbackURL:  config.tokens.url + "login/callback",
       scope: scopes
     },
     (accessToken, refreshToken, profile, done) => {
@@ -53,11 +53,10 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get(
-  "/login",
-  passport.authenticate("discord", { scope: scopes }),
-  (req, res) => {}
-);
+app.get("/login", passport.authenticate("discord", { scope: scopes }), function(
+  req,
+  res
+) {});
 
 app.get(
   "/login/callback",
@@ -71,8 +70,6 @@ app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
-
-//
 
 app.get("/perfil", checkAuth, (req, res) => {
   console.log(req.user);
