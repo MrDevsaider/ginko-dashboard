@@ -7,9 +7,10 @@
   <%
   if (!isLogged.status) {
     isLogged.link = '/login'
-    isLogged.message = "Iniciar sesión" 
+    isLogged.message = "Iniciar sesión"
+    isLogged
   } else {
-    isLogged.link = '/logout',
+    isLogged.link = '/logout'
     isLogged.message = "Cerrar sesión"
   }
   %>
