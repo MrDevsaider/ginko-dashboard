@@ -6,9 +6,14 @@
   <p>Bienvenido ¿qué deseas hacer?</p>
   <%
   if (isLogged.status) {
-    
+    %>
+  <p><a href='/perfil'>Ir a mi perfil</a></p>
+  <p><a href='/logout'>Cerrar sesión</a></p>
+    <%
   } else {
-    
+    %>
+  <p><a href='/login'>Iniciar sesión</a></p>
+    <%
   }
   %>
 </body>
