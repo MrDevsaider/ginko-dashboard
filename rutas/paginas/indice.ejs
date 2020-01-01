@@ -9,9 +9,14 @@
   <h4>awa</h4>
   <p>iwi</p>
   <p>Bienvenido ¿qué deseas hacer?</p>
-  <% if(!isLogged.status) {
-        isLogged.link = '/login'
-        isLogged.message = "Login" }
-    %>
+  <% 
+  if (!isLogged.status) {
+    isLogged.link = '/login'
+    isLogged.message = "Login" 
+  } else {
+    isLogged.link = '/logout',
+    isLogged.message = "Logout"
+  }
+  %>
   <p><a href=<%= isLogged.link %>><%= isLogged.message %></a></p>
 </body>
