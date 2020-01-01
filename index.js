@@ -1,5 +1,4 @@
 /* Definimos las variables de express y passport */
-require("dotenv").config();
 var express = require("express"),
   path = require("path"),
   config = require("./main-config.js"),
@@ -23,12 +22,7 @@ passport.deserializeUser(function(obj, done) {
 });
 
 /** Información del oAuth permitida por el usuario en la aplicación */
-var scopes = [
-  "identify",
-  "email",
-  "guilds",
-  "guilds.join"
-];
+var scopes = ["identify", "guilds"];
 
 /** Lógica del callback, proporcionando la ID de la apliación y la ID secreta de autenticación */
 passport.use(
@@ -36,7 +30,7 @@ passport.use(
     {
       clientID: config.tokens.id,
       clientSecret: config.tokens.app,
-      callbackURL: config.tokens.url + "/callback",
+      callbackURL: config.tokens.url + "callback",
       scope: scopes
     },
     function(accessToken, refreshToken, profile, done) {
@@ -88,7 +82,8 @@ app.get("/perfil", checkAuth, function(req, res) {
   //Manda los párametros al al q
   console.log(req.user);
   res.render("paginas/perfil", {
-    userdata: req.user
+    userdata: req.user,
+    userdebug: Object.keys(req.user)
   });
 });
 
