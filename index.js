@@ -11,11 +11,10 @@ app.engine("ejs", require("ejs").__express);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "rutas"));
 
-passport.serializeUser((user, done) => {
+passport.serializeUser(function(user, done) {
   done(null, user);
 });
-
-passport.deserializeUser((obj, done) => {
+passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
@@ -26,7 +25,7 @@ passport.use(
     {
       clientID: config.tokens.id,
       clientSecret: config.tokens.app,
-      callbackURL:  config.tokens.url + "login/callback",
+      callbackURL: config.tokens.url + "login/callback",
       scope: scopes
     },
     (accessToken, refreshToken, profile, done) => {
