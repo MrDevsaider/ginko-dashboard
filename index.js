@@ -1,4 +1,3 @@
-/* Definimos las variables de express y passport */
 var express = require("express"),
   path = require("path"),
   config = require("./main-config.js"),
@@ -7,13 +6,10 @@ var express = require("express"),
   { Strategy } = require("passport-discord"),
   app = express();
 
-// EJS
 app.engine("ejs", require("ejs").__express);
-
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "rutas"));
 
-/* Control de sesiones */
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -21,10 +17,8 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
-/** Información del oAuth permitida por el usuario en la aplicación */
 var scopes = ["identify", "guilds"];
 
-/** Lógica del callback, proporcionando la ID de la apliación y la ID secreta de autenticación */
 passport.use(
   new Strategy(
     {
@@ -72,18 +66,15 @@ app.get(
   passport.authenticate("discord", { failureRedirect: "/" }),
   function(req, res) {
     res.redirect("/perfil");
-  } // auth success
+  }
 );
 app.get("/logout", function(req, res) {
   req.logout();
   res.redirect("/");
 });
 app.get("/perfil", checkAuth, function(req, res) {
-  //Manda los párametros al al q
-  console.log(req.user);
   res.render("paginas/perfil", {
-    userdata: req.user,
-    userdebug: Object.keys(req.user)
+    userdata: req.user
   });
 });
 
