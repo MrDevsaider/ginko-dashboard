@@ -9,13 +9,13 @@ const app = require("express")(),
 
 app.engine("ejs", require("ejs").__express);
 app.set("view engine", "ejs");
-app.set("rutas", path.join(__dirname, "rutas"));
+app.set("views", path.join(__dirname, "rutas"));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserealizeUser(function(obj, done) {
+passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 
@@ -26,11 +26,11 @@ passport.use(
     {
       clientID: config.tokens.id,
       clientSecret: config.tokens.app,
-      callbackURL: "usa config poki",
+      callbackURL: "https://localhost:300/login/callback",
       scope: scopes
     },
-    function(accessToken, refreshToken, profile, done) {
-      process.nextTick(function() {
+    (accessToken, refreshToken, profile, done) => {
+      process.nextTick(() => {
         return done(null, profile);
       });
     }
@@ -47,21 +47,22 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", function(req, res) {
-  res.render("paginas/index", {
+app.get("/", (req, res) => {
+  res.render("paginas/indice", {
     monmon: "Esto es una prueba"
   });
 });
 
-app.get("/login", passport.authenticate("discord", { scope: scopes }), function(
-  req,
-  res
-) {});
+app.get(
+  "/login",
+  passport.authenticate("discord", { scope: scopes }),
+  (req, res) => {}
+);
 
 app.get(
   "/login/callback",
   passport.authenticate("discord", { failureRedirect: "/" }),
-  function(req, res) {
+  (req, res) => {
     res.redirect("/perfil");
   }
 );
@@ -73,9 +74,19 @@ app.get("/logout", (req, res) => {
 
 //
 
-app.get("perfil", checkAuth, function(re))
+app.get("/perfil", checkAuth, (req, res) => {
+  console.log(req.user);
+  res.render("paginas/perfil", {
+    userData: req.user
+  });
+});
 
-function checkAuth(req, res, next){
-  if(req.isAuthenticated) return next();
+function checkAuth(req, res, next) {
+  if (req.isAuthenticated) return next();
   res.redirect("/");
 }
+
+app.listen(3000, err => {
+  if (err) return console.error(err);
+  console.log("Escuchando en 3000");
+});
