@@ -3,20 +3,16 @@
   <meta name="og:title" content="Ginko" />
 </head>
 <body>
-  <h1>UwU</h1>
-  <h2>OwO</h2>
-  <h3>ewe</h3>
-  <h4>awa</h4>
-  <p>iwi</p>
-  <p>Bienvenido ¿qué deseas hacer?</p>
-  <% 
+  <p>Bienvenido ¿qué deseas hacer?
+  <%
   if (!isLogged.status) {
     isLogged.link = '/login'
-    isLogged.message = "Login" 
+    isLogged.message = "Iniciar sesión" 
   } else {
     isLogged.link = '/logout',
-    isLogged.message = "Logout"
+    isLogged.message = "Cerrar sesión"
   }
   %>
+  </p>
   <p><a href=<%= isLogged.link %>><%= isLogged.message %></a></p>
 </body>

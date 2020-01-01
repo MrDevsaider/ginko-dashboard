@@ -5,20 +5,16 @@ var express = require("express"),
   passport = require("passport"),
   { Strategy } = require("passport-discord"),
   app = express();
-
 app.engine("ejs", require("ejs").__express);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "rutas"));
-
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
 var scopes = ["identify", "guilds"];
-
 passport.use(
   new Strategy(
     {
@@ -34,7 +30,6 @@ passport.use(
     }
   )
 );
-
 app.use(
   session({
     secret: "satella",
@@ -51,8 +46,6 @@ app.get("/", function(req, res) {
   }
   res.render("paginas/indice", {
     isLogged: {
-      link: "/logout",
-      message: "Logout",
       status: loginstatus
     }
   });
@@ -77,12 +70,10 @@ app.get("/perfil", checkAuth, function(req, res) {
     userdata: req.user
   });
 });
-
 function checkAuth(req, res, next) {
   if (req.isAuthenticated()) return next();
   res.redirect("/");
 }
-
 app.listen(5000, function(err) {
   if (err) return console.log(err);
   console.log("Escuchando en 5000");
