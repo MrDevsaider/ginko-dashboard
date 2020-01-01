@@ -8,7 +8,7 @@ var express = require("express"),
 app.engine("ejs", require("ejs").__express);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "rutas"));
-app.use(express.static(__dirname + 'public'));
+app.use(express.static(__dirname + '/public'));
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
