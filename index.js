@@ -2,7 +2,7 @@
 require("dotenv").config();
 var express = require("express"),
   path = require("path"),
-  config = require("./config.js"),
+  config = require("./main-config.js"),
   session = require("express-session"),
   passport = require("passport"),
   { Strategy } = require("passport-discord"),
@@ -12,7 +12,7 @@ var express = require("express"),
 app.engine("ejs", require("ejs").__express);
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "rutas"));
 
 /* Control de sesiones */
 passport.serializeUser(function(user, done) {
@@ -26,7 +26,7 @@ passport.deserializeUser(function(obj, done) {
 var scopes = [
   "identify",
   "email",
-  /* 'connections', (it is currently broken) */ "guilds",
+  "guilds",
   "guilds.join"
 ];
 
@@ -36,7 +36,7 @@ passport.use(
     {
       clientID: config.tokens.id,
       clientSecret: config.tokens.app,
-      callbackURL: config."/callback",
+      callbackURL: config.tokens.url + "/callback",
       scope: scopes
     },
     function(accessToken, refreshToken, profile, done) {
@@ -49,7 +49,7 @@ passport.use(
 
 app.use(
   session({
-    secret: "scripthub_satella",
+    secret: "satella",
     resave: false,
     saveUninitialized: false
   })
@@ -61,7 +61,7 @@ app.get("/", function(req, res) {
   if (!req.isAuthenticated()) {
     loginstatus = false;
   }
-  res.render("pages/indice", {
+  res.render("paginas/indice", {
     isLogged: {
       link: "/logout",
       message: "Logout",
@@ -85,9 +85,9 @@ app.get("/logout", function(req, res) {
   res.redirect("/");
 });
 app.get("/perfil", checkAuth, function(req, res) {
-  //Manda los párametros al
+  //Manda los párametros al al q
   console.log(req.user);
-  res.render("pages/perfil", {
+  res.render("paginas/perfil", {
     userdata: req.user
   });
 });
